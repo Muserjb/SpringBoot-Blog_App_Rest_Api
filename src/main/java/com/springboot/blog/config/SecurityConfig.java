@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -36,20 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
-    public JwtAuthenticationFilter authenticationFilter(){
+    public JwtAuthenticationFilter authenticationFilter() {
         return new JwtAuthenticationFilter();
-    };
-//
-//    @Autowired
-//    private JwtAuthenticationEntryPoint authenticationEntryPoint;
-//
-//    @Bean
-//    public JwtAuthenticationFilter jwtAuthenticationFilter(){
-//        return  new JwtAuthenticationFilter();
-//    }
+    }
+
+    ;
 
     @Bean
-    PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -79,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    }
 
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -91,13 +83,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-//                .antMatchers("/v2/api-docs/**").permitAll()
-//                .antMatchers("/swagger-ui/**").permitAll()
-//                .antMatchers("/swagger-resources/**").permitAll()
-//                .antMatchers("/swagger-ui.html").permitAll()
-//                .antMatchers("/webjars/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/v3/api-docs/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .anyRequest()
                 .authenticated();
         http.httpBasic();
@@ -115,8 +107,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    public AuthenticationManager authenticationManagerBean() throws Exception {
 //        return super.authenticationManagerBean();
 //    }
-
-
 
 
     @Override
