@@ -8,6 +8,8 @@ import com.springboot.blog.payload.SignUpDto;
 import com.springboot.blog.repository.RoleRepository;
 import com.springboot.blog.repository.UserRepository;
 import com.springboot.blog.security.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,10 +27,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 
+@Api(value = "Rest Api for Ath controller for signIn and signUp/register ")
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController {
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -45,6 +47,7 @@ public class AuthController {
     @Autowired
     private JwtTokenProvider tokenProvider;
 
+    @ApiOperation(value = "Rest Api to signin/login user to Blog app ")
     @PostMapping("/signin")
     public ResponseEntity<JwtAutResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -61,6 +64,7 @@ public class AuthController {
 
     }
 
+    @ApiOperation(value = "Rest Api to signup/register user to Blog app ")
     @PostMapping("/signUp")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
 
@@ -82,7 +86,7 @@ public class AuthController {
         user.setName(signUpDto.getName());
         user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
 
-        Role roles = roleRepository.findByName("ROLE_ADMIN").get();
+        Role roles = roleRepository.findByName("ROLE_USER").get();
 
         user.setRole(Collections.singleton(roles));
 

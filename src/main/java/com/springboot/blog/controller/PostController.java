@@ -5,15 +5,17 @@ import com.springboot.blog.payload.PostDto2;
 import com.springboot.blog.payload.PostResponse;
 import com.springboot.blog.service.PostService;
 import com.springboot.blog.utils.AppConstants;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 
+
+@Api(value = "CRUD REST APi for Post resources")
 @RestController
 @RequestMapping()
 public class PostController {
@@ -23,9 +25,11 @@ public class PostController {
     public PostController(PostService postService) {
         this.postService = postService;
     }
+
     // get all posts rest api
+    @ApiOperation(value = "Get All Post by id Rest Api")
     @GetMapping("/api/v1/posts")
-    // @PreAuthorize("hasRole('USER')")
+     @PreAuthorize("hasRole('USER')")
     public PostResponse getAllPosts(
             @RequestParam(value = "pageNo", defaultValue = AppConstants.DEFAULT_PAGE_NUMBER, required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = AppConstants.DEFAULT_PAGE_SIZE, required = false) int pageSize,
@@ -34,9 +38,11 @@ public class PostController {
     ){
         return postService.getAllPosts(pageNo, pageSize, sortBy, sortDir);
     }
+
     // create blog post rest api
+    @ApiOperation(value = "Create Post by id Rest Api")
     @PostMapping("/api/v1/posts")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
@@ -48,6 +54,7 @@ public class PostController {
     // @GetMapping(value = "api/posts/{id}",params = "version=1")
    // @GetMapping(value = "/api/posts/{id}",headers = "X-API-VERSION=1")
    // @GetMapping(value = "api/posts/{id}", produces = "application/vnd.javaguides.v1+json")
+    @ApiOperation(value = "Get Post by id Rest Api")
     @GetMapping(value = "api/v1/posts/{id}")
     public ResponseEntity<PostDto> getPostByIdv1(@PathVariable(name = "id") long id){
         return ResponseEntity.ok(postService.getPostById(id));
@@ -77,18 +84,19 @@ public class PostController {
         return ResponseEntity.ok(postDto2);
     }
  */
-
-    // update post by id rest api
+// update post by id rest api
+    @ApiOperation(value = "Update Post by id Rest Api")
     @PutMapping("api/v1/posts/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") long id){
 
-       PostDto postResponse = postService.updatePost(postDto, id);
+      // PostDto postResponse = postService.updatePost(postDto, id);
 
-       return new ResponseEntity<>(postResponse, HttpStatus.OK);
+       return new ResponseEntity<>(postService.updatePost(postDto, id), HttpStatus.OK);
     }
 
     // delete post rest api
+    @ApiOperation(value = "Delete Post by id Rest Api")
     @DeleteMapping("api/v1/posts/{id}")
    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> deletePost(@PathVariable(name = "id") long id){
