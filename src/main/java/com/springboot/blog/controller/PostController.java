@@ -27,7 +27,7 @@ public class PostController {
     }
 
     // get all posts rest api
-    @ApiOperation(value = "Get All Post by id Rest Api")
+    @ApiOperation(value = "Get All Post Rest Api")
     @GetMapping("/api/v1/posts")
      @PreAuthorize("hasRole('USER')")
     public PostResponse getAllPosts(
@@ -40,14 +40,12 @@ public class PostController {
     }
 
     // create blog post rest api
-    @ApiOperation(value = "Create Post by id Rest Api")
+    @ApiOperation(value = "Create Post Rest Api")
     @PostMapping("/api/v1/posts")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
-
-
 
     // get post by id
     // Testing versioning Urls
@@ -89,9 +87,7 @@ public class PostController {
     @PutMapping("api/v1/posts/{id}")
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") long id){
-
       // PostDto postResponse = postService.updatePost(postDto, id);
-
        return new ResponseEntity<>(postService.updatePost(postDto, id), HttpStatus.OK);
     }
 

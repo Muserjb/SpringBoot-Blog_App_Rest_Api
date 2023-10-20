@@ -46,7 +46,7 @@ public class CommentController {
         return new ResponseEntity<>(commentDto, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Update Comment by id and post_id Rest Api")
+    @ApiOperation(value = "Update Comment and post id Rest Api")
     @PutMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity<CommentDto> updateComment(@PathVariable(value = "postId") Long postId,
                                                     @PathVariable(value = "id") Long commentId,
@@ -55,7 +55,7 @@ public class CommentController {
         return new ResponseEntity<>(updatedComment, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Delete Comment by id Rest Api")
+    @ApiOperation(value = "Delete Comment by comment and post id Rest Api")
     @DeleteMapping("/posts/{postId}/comments/{id}")
     public ResponseEntity<String> deleteComment(@PathVariable(value = "postId") Long postId,
                                                 @PathVariable(value = "id") Long commentId){

@@ -26,7 +26,7 @@ public class SwaggerConfig {
         return new ApiInfo(
                 "Spring Boot Blog App Rest Api",
                 "Spring boot Blog App Rest Api`s Documentation",
-                "2",
+                "1",
                 "Terms of Service",
                 new Contact("Musa Usman", "https:/www.linkedin.com/in/usman-musa-profile0003/", "musausmanjb@gmail.com"),
                 "licence of API ...",
@@ -47,14 +47,9 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build();
     }
-
-
-
     private SecurityContext securityContext(){
         return SecurityContext.builder().securityReferences(defaultAuth()).build();
-
     }
-
     private List<SecurityReference> defaultAuth(){
         AuthorizationScope authorizationScope = new AuthorizationScope("JWT", "accessToEverything");
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];

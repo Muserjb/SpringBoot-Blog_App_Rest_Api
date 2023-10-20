@@ -44,7 +44,7 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+   @Autowired
     private JwtTokenProvider tokenProvider;
 
     @ApiOperation(value = "Rest Api to signin/login user to Blog app ")
